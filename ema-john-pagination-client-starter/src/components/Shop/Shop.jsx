@@ -47,10 +47,12 @@ const Shop = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/products")
+    fetch(
+      `http://localhost:5000/products?page=${currentPage}&size=${itemPerPage}`
+    )
       .then((res) => res.json())
       .then((data) => setProducts(data));
-  }, []);
+  }, [currentPage, itemPerPage]);
 
   useEffect(() => {
     const storedCart = getShoppingCart();
@@ -120,7 +122,8 @@ const Shop = () => {
         <button onClick={handlePrev}>prev</button>
         {pages.map((page) => (
           <button
-            className={page === currentPage && "activePage"}
+            key={page}
+            className={page === currentPage ? "activePage" : undefined}
             onClick={() => setCurrentPage(page)}
           >
             {page}
